@@ -605,8 +605,19 @@ body {
     width: 90%;
     max-height: 90vh;
     overflow-y: auto;
+    overflow-x: hidden;
     box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
     position: relative;
+}
+
+/* Cart modal specific styles */
+#cart-modal .modal-content {
+    max-width: 600px;
+    width: 95%;
+}
+
+#cart-modal .modal-body {
+    padding: 2rem 3rem 2rem 2rem;
 }
 
 .modal-header {
@@ -637,7 +648,7 @@ body {
 }
 
 .modal-body {
-    padding: 2rem;
+    padding: 2rem 2.5rem 2rem 2rem;
 }
 
 /* Product Options Modal Styles */
@@ -972,6 +983,139 @@ body {
     box-shadow: 0 8px 16px rgba(16, 185, 129, 0.3);
 }
 
+/* Customer Information Form */
+.customer-info {
+    margin: 2rem 0;
+    padding: 2rem;
+    background: linear-gradient(135deg, #f8fafc, #f1f5f9);
+    border-radius: 1.5rem;
+    border: 2px solid #e2e8f0;
+}
+
+.customer-info h3 {
+    color: #1e293b;
+    font-size: 1.25rem;
+    font-weight: bold;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.customer-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.customer-form .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    width: 100%;
+}
+
+.customer-form .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    width: 100%;
+    min-width: 0;
+}
+
+.customer-form label {
+    font-weight: bold;
+    color: #374151;
+    font-size: 0.875rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.customer-form input,
+.customer-form textarea {
+    padding: 0.75rem 1rem;
+    border: 2px solid #e5e7eb;
+    border-radius: 0.75rem;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+    background: white;
+    width: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.customer-form input:focus,
+.customer-form textarea:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.customer-form textarea {
+    min-height: 80px;
+    resize: vertical;
+}
+
+/* Delivery Information */
+.delivery-info {
+    margin: 1.5rem 0;
+}
+
+.delivery-card {
+    background: linear-gradient(135deg, #fef3c7, #fde68a);
+    border: 2px solid #f59e0b;
+    border-radius: 1.5rem;
+    overflow: hidden;
+}
+
+.delivery-header {
+    background: linear-gradient(135deg, #f59e0b, #d97706);
+    color: white;
+    padding: 1rem 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.delivery-header i {
+    font-size: 1.25rem;
+}
+
+.delivery-header h4 {
+    font-weight: bold;
+    font-size: 1.125rem;
+}
+
+.delivery-content {
+    padding: 1.5rem;
+}
+
+.delivery-content p {
+    margin-bottom: 0.75rem;
+    color: #92400e;
+    font-size: 0.875rem;
+    line-height: 1.5;
+}
+
+.delivery-content p:last-child {
+    margin-bottom: 0;
+}
+
+.delivery-content strong {
+    color: #78350f;
+}
+
+/* Cart Total - Simplified */
+.cart-total {
+    border: 2px solid #dc2626;
+    border-radius: 1rem;
+    padding: 1.5rem;
+    margin-top: 1.5rem;
+    background: white;
+}
+
 /* Toast Styles */
 .toast-container {
     position: fixed;
@@ -1111,6 +1255,10 @@ body {
     .modal-body {
         padding: 1rem;
     }
+    
+    #cart-modal .modal-body {
+        padding: 1rem 1.5rem 1rem 1rem;
+    }
 }
 
 @media (max-width: 480px) {
@@ -1139,5 +1287,34 @@ body {
     .price-badge {
         font-size: 1rem;
         padding: 0.25rem 1rem;
+    }
+    
+    /* Customer form responsive */
+    .customer-form .form-row {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    
+    .customer-info {
+        padding: 1rem;
+        margin: 1rem 0;
+    }
+    
+    .customer-form input,
+    .customer-form textarea {
+        font-size: 0.875rem;
+        padding: 0.5rem 0.75rem;
+    }
+    
+    .customer-form label {
+        font-size: 0.8rem;
+    }
+    
+    .delivery-content {
+        padding: 1rem;
+    }
+    
+    .delivery-content p {
+        font-size: 0.8rem;
     }
 }

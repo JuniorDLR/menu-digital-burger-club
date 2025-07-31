@@ -520,15 +520,21 @@ function renderCartItems() {
     const container = document.getElementById('cart-items');
     const emptyState = document.getElementById('cart-empty');
     const totalSection = document.getElementById('cart-total');
+    const customerInfo = document.getElementById('customer-info');
+    const deliveryInfo = document.getElementById('delivery-info');
     
     if (cart.length === 0) {
         container.style.display = 'none';
         emptyState.style.display = 'block';
         totalSection.style.display = 'none';
+        customerInfo.style.display = 'none';
+        deliveryInfo.style.display = 'none';
     } else {
         container.style.display = 'block';
         emptyState.style.display = 'none';
         totalSection.style.display = 'block';
+        customerInfo.style.display = 'block';
+        deliveryInfo.style.display = 'block';
         
         container.innerHTML = '';
         cart.forEach((item, index) => {
@@ -595,6 +601,16 @@ function updateCartTotal() {
 
 // Send order to WhatsApp
 function sendToWhatsApp() {
+    // Validar información del cliente
+    const customerName = document.getElementById('customer-name').value.trim();
+    const customerPhone = document.getElementById('customer-phone').value.trim();
+    const customerAddress = document.getElementById('customer-address').value.trim();
+    
+    if (!customerName || !customerPhone || !customerAddress) {
+        showToast('❌ Por favor completa toda la información de entrega', 'error');
+        return;
+    }
+    
     const currentDate = new Date().toLocaleDateString('es-ES', {
         year: 'numeric',
         month: 'long',
@@ -606,21 +622,39 @@ function sendToWhatsApp() {
     let message = `🍔 *PEDIDO THE BURGER CLUB* 🍔\n`;
     message += `📅 *Fecha:* ${currentDate}\n`;
     message += `🌐 *Pedido desde:* Página Web\n\n`;
-    message += `📋 *DETALLES DEL PEDIDO:*\n\n`;
+    
+    // Información del cliente
+    message += `👤 *INFORMACIÓN DEL CLIENTE:*\n`;
+    message += `📝 Nombre: ${customerName}\n`;
+    message += `📞 Teléfono: ${customerPhone}\n`;
+    message += `📍 Dirección: ${customerAddress}\n`;
+    
+    const customerHouseColor = document.getElementById('customer-house-color').value.trim();
+    const customerReference = document.getElementById('customer-reference').value.trim();
+    
+    if (customerHouseColor) {
+        message += `🏠 Color de Casa: ${customerHouseColor}\n`;
+    }
+    if (customerReference) {
+        message += `🔍 Referencia: ${customerReference}\n`;
+    }
+    
+    message += `\n📋 *DETALLES DEL PEDIDO:*\n\n`;
     
     cart.forEach((item, index) => {
         message += `${index + 1}. *${item.name}*\n`;
         if (item.selectedOption) {
-            message += `   Opción: ${item.selectedOption}\n`;
+            message += `   └─ Opción: ${item.selectedOption}\n`;
         }
         if (item.selectedSauces && item.selectedSauces.length > 0) {
-            message += `   Salsas: ${item.selectedSauces.join(', ')}\n`;
+            message += `   └─ Salsas: ${item.selectedSauces.join(', ')}\n`;
         }
-        message += `   Cantidad: ${item.quantity} - C$${item.price * item.quantity}\n\n`;
+        message += `   └─ Cantidad: ${item.quantity} - C$${item.price * item.quantity}\n\n`;
     });
     
     const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-    message += `💰 *TOTAL A PAGAR: C$${total}*\n\n`;
+    message += `💰 *TOTAL: C$${total}*\n`;
+    message += `🚚 *DELIVERY:* Se gestiona directamente con el encargado\n\n`;
     message += `📍 Granada, Nicaragua\n`;
     message += `📞 8151 2492\n\n`;
     message += `¡Gracias por tu pedido! 🎉`;
@@ -633,10 +667,14 @@ function sendToWhatsApp() {
         if (whatsappUrl.length > 2048) {
             // Si es muy larga, usar un mensaje más corto
             let shortMessage = `🍔 *PEDIDO THE BURGER CLUB*\n\n`;
+            shortMessage += `👤 ${customerName} - ${customerPhone}\n`;
+            shortMessage += `📍 ${customerAddress}\n\n`;
+            
             cart.forEach((item, index) => {
                 shortMessage += `${index + 1}. ${item.name} x${item.quantity} - C$${item.price * item.quantity}\n`;
             });
             shortMessage += `\n💰 *TOTAL: C$${total}*\n`;
+            shortMessage += `🚚 *DELIVERY:* Se gestiona por WhatsApp\n`;
             shortMessage += `📍 Granada, Nicaragua`;
             
             const shortUrl = `https://wa.me/50581512492?text=${encodeURIComponent(shortMessage)}`;

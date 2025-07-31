@@ -131,6 +131,53 @@
                     <h3>Tu carrito está vacío</h3>
                     <p>¡Agrega algunos productos deliciosos!</p>
                 </div>
+                
+                <!-- Customer Information Form -->
+                <div class="customer-info" id="customer-info" style="display: none;">
+                    <h3>📋 Información de Entrega</h3>
+                    <form id="customer-form" class="customer-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="customer-name">Nombre Completo *</label>
+                                <input type="text" id="customer-name" required placeholder="Ej: Juan Pérez">
+                            </div>
+                            <div class="form-group">
+                                <label for="customer-phone">Teléfono *</label>
+                                <input type="tel" id="customer-phone" required placeholder="+505 8151 2492">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="customer-address">Dirección Completa *</label>
+                            <textarea id="customer-address" required placeholder="Ej: Calle Principal #123, Barrio San Francisco, Granada"></textarea>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="customer-house-color">Color de Casa</label>
+                                <input type="text" id="customer-house-color" placeholder="Ej: Casa azul con portón blanco">
+                            </div>
+                            <div class="form-group">
+                                <label for="customer-reference">Referencia Adicional</label>
+                                <input type="text" id="customer-reference" placeholder="Ej: Frente al parque, casa de dos pisos">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                
+                <!-- Delivery Information -->
+                <div class="delivery-info" id="delivery-info" style="display: none;">
+                    <div class="delivery-card">
+                        <div class="delivery-header">
+                            <i class="fas fa-truck"></i>
+                            <h4>Información de Delivery</h4>
+                        </div>
+                        <div class="delivery-content">
+                            <p>🚚 <strong>Costo de Delivery:</strong> Se gestiona directamente con el encargado del local por WhatsApp.</p>
+                            <p>📍 El precio varía según la distancia y zona de entrega.</p>
+                            <p>⏰ <strong>Tiempo estimado:</strong> 30-45 minutos</p>
+                        </div>
+                    </div>
+                </div>
+                
                 <div class="cart-total" id="cart-total" style="display: none;">
                     <div class="total-row">
                         <span class="total-label">Total:</span>
@@ -138,7 +185,7 @@
                     </div>
                     <button class="whatsapp-btn" id="whatsapp-btn">
                         <i class="fab fa-whatsapp"></i>
-                        Enviar por WhatsApp
+                        Enviar Pedido por WhatsApp
                     </button>
                 </div>
             </div>
