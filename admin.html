@@ -1,11 +1,432 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Panel Administrativo - The Burger Club</title>
+    <link rel="stylesheet" href="css/admin-style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
 <body>
-    
+    <!-- Login Screen -->
+    <div id="login-screen" class="login-screen">
+        <div class="login-card">
+            <div class="login-header">
+                <div class="login-icon">
+                    <i class="fas fa-lock"></i>
+                </div>
+                <h1>Panel Administrativo</h1>
+                <p>The Burger Club</p>
+            </div>
+            <div class="login-body">
+                <div id="admin-info" class="admin-info">
+                    <div class="admin-details">
+                        <i class="fas fa-user"></i>
+                        <div>
+                            <p class="admin-name" id="admin-name">Bienvenido</p>
+                            <p class="admin-email" id="admin-email"></p>
+                        </div>
+                    </div>
+                </div>
+                <form id="login-form" class="login-form">
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" id="login-email" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Contraseña</label>
+                        <input type="password" id="login-password" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Register Screen -->
+    <div id="register-screen" class="register-screen" style="display: none;">
+        <div class="register-card">
+            <div class="register-header">
+                <div class="register-icon">
+                    <i class="fas fa-user-plus"></i>
+                </div>
+                <h1>Crear Cuenta de Administrador</h1>
+                <p>The Burger Club - Configuración Inicial</p>
+            </div>
+            <div class="register-body">
+                <form id="register-form" class="register-form">
+                    <div class="form-group">
+                        <label>Nombre Completo</label>
+                        <input type="text" id="register-name" placeholder="Ej: Juan Pérez" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" id="register-email" placeholder="admin@burgerclub.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Contraseña</label>
+                        <input type="password" id="register-password" placeholder="Mínimo 6 caracteres" minlength="6" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Confirmar Contraseña</label>
+                        <input type="password" id="register-confirm" placeholder="Repite la contraseña" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-user-plus"></i>
+                        Crear Cuenta de Administrador
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Panel -->
+    <div id="admin-panel" class="admin-panel" style="display: none;">
+        <!-- Header -->
+        <header class="admin-header">
+            <div class="container">
+                <div class="header-content">
+                    <div class="brand-section">
+                        <div class="admin-icon">
+                            <i class="fas fa-cogs"></i>
+                        </div>
+                        <div>
+                            <h1>Panel Administrativo</h1>
+                            <p>The Burger Club - Gestión de Menú</p>
+                        </div>
+                    </div>
+                    <div class="user-section">
+                        <div class="user-info">
+                            <i class="fas fa-user"></i>
+                            <span id="current-user">Usuario</span>
+                        </div>
+                        <button class="btn btn-secondary" id="logout-btn">Cerrar Sesión</button>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Navigation Tabs -->
+        <nav class="admin-nav">
+            <div class="container">
+                <div class="nav-tabs">
+                    <button class="nav-tab active" data-tab="products">
+                        <i class="fas fa-box"></i>
+                        <span>Gestión de Productos</span>
+                    </button>
+                    <button class="nav-tab" data-tab="add">
+                        <i class="fas fa-plus"></i>
+                        <span>Agregar Producto</span>
+                    </button>
+                    <button class="nav-tab" data-tab="stats">
+                        <i class="fas fa-chart-bar"></i>
+                        <span>Estadísticas</span>
+                    </button>
+                    <button class="nav-tab" data-tab="account">
+                        <i class="fas fa-user-shield"></i>
+                        <span>Mi Cuenta</span>
+                    </button>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="admin-main">
+            <div class="container">
+                <!-- Products Tab -->
+                <div id="products-tab" class="tab-content active">
+                    <div id="products-container">
+                        <!-- Products will be populated by JavaScript -->
+                    </div>
+                </div>
+
+                <!-- Add Product Tab -->
+                <div id="add-tab" class="tab-content">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2><i class="fas fa-plus"></i> Agregar Nuevo Producto</h2>
+                        </div>
+                        <div class="card-body">
+                            <form id="add-product-form" class="product-form">
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label><i class="fas fa-tag"></i> Nombre del Producto *</label>
+                                        <input type="text" id="product-name" placeholder="Ej: Super Burger Deluxe" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label><i class="fas fa-dollar-sign"></i> Precio (C$) *</label>
+                                        <input type="number" id="product-price" step="0.01" placeholder="250.00" required>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label><i class="fas fa-file-text"></i> Descripción</label>
+                                    <textarea id="product-description" placeholder="Describe los ingredientes y características del producto..."></textarea>
+                                </div>
+                                
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label>Categoría</label>
+                                        <select id="product-category">
+                                            <option value="hamburguesas">🍔 Hamburguesas</option>
+                                            <option value="snacks">🍟 Snacks</option>
+                                            <option value="extras">🥗 Extras</option>
+                                            <option value="sandwiches">🥪 Sandwiches</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label><i class="fas fa-image"></i> Imagen del Producto</label>
+                                        <input type="file" id="product-image" accept="image/*">
+                                        <div id="image-preview" class="image-preview"></div>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-switches">
+                                    <div class="switch-group">
+                                        <label class="switch">
+                                            <input type="checkbox" id="product-available" checked>
+                                            <span class="slider"></span>
+                                        </label>
+                                        <span>Disponible</span>
+                                    </div>
+                                    <div class="switch-group">
+                                        <label class="switch">
+                                            <input type="checkbox" id="product-new">
+                                            <span class="slider"></span>
+                                        </label>
+                                        <span>Marcar como nuevo</span>
+                                    </div>
+                                    <div class="switch-group">
+                                        <label class="switch">
+                                            <input type="checkbox" id="product-promotion">
+                                            <span class="slider"></span>
+                                        </label>
+                                        <span>Marcar como promoción</span>
+                                    </div>
+                                </div>
+                                
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-plus"></i>
+                                    Agregar Producto
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Statistics Tab -->
+                <div id="stats-tab" class="tab-content">
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-header">
+                                <h3>Productos Totales</h3>
+                            </div>
+                            <div class="stat-value" id="total-products">0</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-header">
+                                <h3>Disponibles</h3>
+                            </div>
+                            <div class="stat-value" id="available-products">0</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-header">
+                                <h3>Agotados</h3>
+                            </div>
+                            <div class="stat-value" id="unavailable-products">0</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-header">
+                                <h3>Productos Nuevos</h3>
+                            </div>
+                            <div class="stat-value" id="new-products">0</div>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-header">
+                            <h2>Productos por Categoría</h2>
+                        </div>
+                        <div class="card-body">
+                            <div id="category-stats" class="category-stats">
+                                <!-- Category stats will be populated by JavaScript -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Account Tab -->
+                <div id="account-tab" class="tab-content">
+                    <div class="account-grid">
+                        <div class="card">
+                            <div class="card-header">
+                                <h2><i class="fas fa-user"></i> Información del Perfil</h2>
+                            </div>
+                            <div class="card-body">
+                                <form id="profile-form">
+                                    <div class="form-group">
+                                        <label><i class="fas fa-user"></i> Nombre Completo</label>
+                                        <input type="text" id="profile-name" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label><i class="fas fa-envelope"></i> Email</label>
+                                        <input type="email" id="profile-email" required>
+                                    </div>
+                                    <div class="account-info">
+                                        <strong>Cuenta creada:</strong>
+                                        <span id="account-created">No disponible</span>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="fas fa-user"></i>
+                                        Actualizar Perfil
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                        
+                        <div class="card">
+                            <div class="card-header">
+                                <h2><i class="fas fa-key"></i> Cambiar Contraseña</h2>
+                            </div>
+                            <div class="card-body">
+                                <form id="password-form">
+                                    <div class="form-group">
+                                        <label><i class="fas fa-lock"></i> Contraseña Actual</label>
+                                        <input type="password" id="current-password" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label><i class="fas fa-key"></i> Nueva Contraseña</label>
+                                        <input type="password" id="new-password" minlength="6" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label><i class="fas fa-key"></i> Confirmar Nueva Contraseña</label>
+                                        <input type="password" id="confirm-password" required>
+                                    </div>
+                                    <div class="security-tips">
+                                        <div class="tips-header">
+                                            <i class="fas fa-shield-alt"></i>
+                                            <h4>Consejos de Seguridad</h4>
+                                        </div>
+                                        <ul>
+                                            <li>• Usa al menos 6 caracteres</li>
+                                            <li>• Combina letras, números y símbolos</li>
+                                            <li>• No uses información personal</li>
+                                        </ul>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="fas fa-key"></i>
+                                        Cambiar Contraseña
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Edit Product Modal -->
+    <div class="modal" id="edit-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Editar Producto</h2>
+                <button class="close-btn" id="close-edit">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="edit-product-form" class="product-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label><i class="fas fa-tag"></i> Nombre del Producto *</label>
+                            <input type="text" id="edit-product-name" required>
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fas fa-dollar-sign"></i> Precio (C$) *</label>
+                            <input type="number" id="edit-product-price" step="0.01" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label><i class="fas fa-file-text"></i> Descripción</label>
+                        <textarea id="edit-product-description"></textarea>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Categoría</label>
+                            <select id="edit-product-category">
+                                <option value="hamburguesas">🍔 Hamburguesas</option>
+                                <option value="snacks">🍟 Snacks</option>
+                                <option value="extras">🥗 Extras</option>
+                                <option value="sandwiches">🥪 Sandwiches</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fas fa-image"></i> Imagen del Producto</label>
+                            <input type="file" id="edit-product-image" accept="image/*">
+                            <div id="edit-image-preview" class="image-preview"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-switches">
+                        <div class="switch-group">
+                            <label class="switch">
+                                <input type="checkbox" id="edit-product-available">
+                                <span class="slider"></span>
+                            </label>
+                            <span>Disponible</span>
+                        </div>
+                        <div class="switch-group">
+                            <label class="switch">
+                                <input type="checkbox" id="edit-product-new">
+                                <span class="slider"></span>
+                            </label>
+                            <span>Marcar como nuevo</span>
+                        </div>
+                        <div class="switch-group">
+                            <label class="switch">
+                                <input type="checkbox" id="edit-product-promotion">
+                                <span class="slider"></span>
+                            </label>
+                            <span>Marcar como promoción</span>
+                        </div>
+                    </div>
+                    
+                    <div class="modal-actions">
+                        <button type="button" class="btn btn-secondary" id="cancel-edit">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">Actualizar Producto</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div class="modal" id="delete-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i class="fas fa-trash"></i> Confirmar Eliminación</h2>
+                <button class="close-btn" id="close-delete">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="delete-confirmation">
+                    <div class="delete-icon">
+                        <i class="fas fa-trash"></i>
+                    </div>
+                    <p>¿Estás seguro de que quieres eliminar este producto?</p>
+                    <p class="delete-warning">Esta acción no se puede deshacer.</p>
+                </div>
+                <div class="modal-actions">
+                    <button class="btn btn-secondary" id="cancel-delete">Cancelar</button>
+                    <button class="btn btn-danger" id="confirm-delete">
+                        <i class="fas fa-trash"></i>
+                        Eliminar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/admin.js"></script>
 </body>
 </html>

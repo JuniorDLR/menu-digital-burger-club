@@ -1,11 +1,169 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>The Burger Club - Menú Digital</title>
+    <meta name="description" content="Menú digital interactivo de The Burger Club. Fresh & Tasty!">
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
 <body>
-    
+    <!-- Toast Container -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="header-top">
+            <div class="container">
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <span>Pide con The Burger Club al 8151 2492</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>Granada, Nicaragua</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="header-main">
+            <div class="container">
+                <div class="header-content">
+                    <div class="brand-section">
+                        <div class="logo-container">
+                            <img src="images/logo.jpg" alt="The Burger Club" class="logo">
+                            <div class="fresh-badge">FRESH</div>
+                        </div>
+                        <div class="brand-text">
+                            <h1 class="brand-title">The Burger Club</h1>
+                            <p class="brand-subtitle">Fresh & Tasty</p>
+                            <div class="award-badge">
+                                🏆 La mejor hamburguesa de Granada
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button class="cart-btn" id="cart-btn">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span>Mi Pedido</span>
+                        <div class="cart-badge" id="cart-badge">0</div>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Category Navigation -->
+    <nav class="category-nav">
+        <div class="container">
+            <div class="category-buttons" id="category-buttons">
+                <!-- Categories will be populated by JavaScript -->
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <!-- Category Banner -->
+            <div id="category-banner" class="category-banner"></div>
+            
+            <!-- Menu Items Grid -->
+            <div class="menu-grid" id="menu-grid">
+                <!-- Menu items will be populated by JavaScript -->
+            </div>
+            
+            <!-- Empty State -->
+            <div class="empty-state" id="empty-state" style="display: none;">
+                <div class="empty-icon">🍽️</div>
+                <h3 class="empty-title">No hay productos en esta categoría</h3>
+                <p class="empty-text">¡Pronto agregaremos más opciones deliciosas!</p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <img src="images/logo.jpg" alt="Logo" class="footer-logo">
+                    <div>
+                        <h3>The Burger Club</h3>
+                        <p>Fresh & Tasty</p>
+                    </div>
+                </div>
+                <div class="footer-info">
+                    <div class="info-card">
+                        <i class="fas fa-phone"></i>
+                        <h4>Teléfono</h4>
+                        <p>8151 2492</p>
+                    </div>
+                    <div class="info-card">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <h4>Ubicación</h4>
+                        <p>Granada, Nicaragua</p>
+                    </div>
+                </div>
+                <div class="footer-bottom">
+                    <p>© 2024 The Burger Club. Todos los derechos reservados.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Cart Modal -->
+    <div class="modal" id="cart-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>🛒 Tu Pedido</h2>
+                <button class="close-btn" id="close-cart">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="cart-items" class="cart-items">
+                    <!-- Cart items will be populated by JavaScript -->
+                </div>
+                <div class="cart-empty" id="cart-empty">
+                    <div class="empty-cart-icon">🛒</div>
+                    <h3>Tu carrito está vacío</h3>
+                    <p>¡Agrega algunos productos deliciosos!</p>
+                </div>
+                <div class="cart-total" id="cart-total" style="display: none;">
+                    <div class="total-row">
+                        <span class="total-label">Total:</span>
+                        <span class="total-amount" id="total-amount">C$0</span>
+                    </div>
+                    <button class="whatsapp-btn" id="whatsapp-btn">
+                        <i class="fab fa-whatsapp"></i>
+                        Enviar por WhatsApp
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Product Options Modal -->
+    <div class="modal" id="options-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="options-title">Opciones del Producto</h2>
+                <button class="close-btn" id="close-options">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="options-content">
+                    <!-- Options will be populated by JavaScript -->
+                </div>
+                <div class="modal-actions">
+                    <button class="btn btn-secondary" id="cancel-options">Cancelar</button>
+                    <button class="btn btn-primary" id="add-to-cart">Agregar al Carrito</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/main.js"></script>
 </body>
 </html>
