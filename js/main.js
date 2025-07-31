@@ -282,7 +282,10 @@ function createMenuItemElement(item) {
     
     div.innerHTML = `
         <div class="menu-item-image">
-            <img src="${item.image || 'images/placeholder.jpg'}" alt="${item.name}" onerror="this.src='images/placeholder.jpg'">
+            <div class="image-placeholder">
+                <div class="placeholder-icon">🍔</div>
+                <div class="placeholder-text">${item.name}</div>
+            </div>
             <div class="price-badge ${item.isPromotion ? 'promotion' : ''}">
                 C$ ${item.price}
             </div>
@@ -327,39 +330,63 @@ function showOptionsModal(item) {
     const title = document.getElementById('options-title');
     const content = document.getElementById('options-content');
     
-    title.textContent = `Opciones para ${item.name}`;
+    title.textContent = item.name;
     
     let html = '';
+    
+    // Product image placeholder
+    html += `
+        <div class="product-image-placeholder">
+            <div class="image-icon">📷</div>
+        </div>
+    `;
+    
+    // Product description
+    html += `
+        <div class="product-description">
+            <h3>${item.name}</h3>
+            <p>${item.description}</p>
+        </div>
+    `;
     
     // Options
     if (item.options) {
         html += `
             <div class="option-group">
-                <h4>Selecciona una opción:</h4>
-                <div class="options-list">
-                    ${item.options.map(option => `
-                        <label class="option-item">
-                            <input type="radio" name="option" value="${option.name}" data-price="${option.price}">
-                            <span>${option.name} - C$${option.price}</span>
-                        </label>
-                    `).join('')}
+                <label class="option-label">Selecciona una opción:</label>
+                <div class="option-selector">
+                    <select id="option-select" class="option-dropdown">
+                        <option value="" disabled selected>Elige una opción</option>
+                        ${item.options.map(option => `
+                            <option value="${option.name}" data-price="${option.price}">
+                                ${option.name} - C$${option.price}
+                            </option>
+                        `).join('')}
+                    </select>
                 </div>
             </div>
         `;
     }
     
-    // Sauces
+    // Sauces button
     if (item.sauces) {
         html += `
-            <div class="option-group">
-                <h4>Salsas (opcional):</h4>
-                <div class="sauces-grid">
-                    ${sauces.map(sauce => `
-                        <label class="sauce-item">
-                            <input type="checkbox" name="sauce" value="${sauce}">
-                            <span>${sauce}</span>
-                        </label>
-                    `).join('')}
+            <div class="sauces-section">
+                <button type="button" class="sauces-btn" id="sauces-btn">
+                    Agregar Salsas (0)
+                </button>
+                <div class="sauces-panel" id="sauces-panel" style="display: none;">
+                    <div class="sauces-header">
+                        <h4>Ocultar Salsas (0)</h4>
+                    </div>
+                    <div class="sauces-grid">
+                        ${sauces.map(sauce => `
+                            <label class="sauce-item">
+                                <input type="checkbox" name="sauce" value="${sauce}">
+                                <span>${sauce}</span>
+                            </label>
+                        `).join('')}
+                    </div>
                 </div>
             </div>
         `;
@@ -367,6 +394,37 @@ function showOptionsModal(item) {
     
     content.innerHTML = html;
     modal.classList.add('active');
+    
+    // Setup sauces functionality
+    if (item.sauces) {
+        setupSaucesFunctionality();
+    }
+}
+
+// Setup sauces functionality
+function setupSaucesFunctionality() {
+    const saucesBtn = document.getElementById('sauces-btn');
+    const saucesPanel = document.getElementById('sauces-panel');
+    const saucesHeader = document.querySelector('.sauces-header h4');
+    const sauceCheckboxes = document.querySelectorAll('input[name="sauce"]');
+    
+    let selectedSaucesCount = 0;
+    
+    // Toggle sauces panel
+    saucesBtn.addEventListener('click', () => {
+        const isVisible = saucesPanel.style.display !== 'none';
+        saucesPanel.style.display = isVisible ? 'none' : 'block';
+        saucesBtn.textContent = isVisible ? 'Agregar Salsas (0)' : 'Ocultar Salsas (' + selectedSaucesCount + ')';
+    });
+    
+    // Update sauces count
+    sauceCheckboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', () => {
+            selectedSaucesCount = document.querySelectorAll('input[name="sauce"]:checked').length;
+            saucesBtn.textContent = `Agregar Salsas (${selectedSaucesCount})`;
+            saucesHeader.textContent = `Ocultar Salsas (${selectedSaucesCount})`;
+        });
+    });
 }
 
 // Add selected options to cart
@@ -379,13 +437,14 @@ function addSelectedToCart() {
     
     // Get selected option
     if (currentProduct.options) {
-        const optionInput = document.querySelector('input[name="option"]:checked');
-        if (!optionInput) {
+        const optionSelect = document.getElementById('option-select');
+        if (!optionSelect.value) {
             showToast('Por favor selecciona una opción', 'error');
             return;
         }
-        selectedOption = optionInput.value;
-        price = parseFloat(optionInput.dataset.price);
+        selectedOption = optionSelect.value;
+        const selectedOptionElement = optionSelect.querySelector(`option[value="${selectedOption}"]`);
+        price = parseFloat(selectedOptionElement.dataset.price);
     }
     
     // Get selected sauces
