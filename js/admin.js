@@ -393,7 +393,12 @@ function createProductItem(product) {
     
     return `
         <div class="product-item">
-            <img src="${product.image || 'images/placeholder.jpg'}" alt="${product.name}" class="product-image" onerror="this.src='images/placeholder.jpg'">
+            <div class="product-image">
+                <div class="image-placeholder">
+                    <div class="placeholder-icon">🍔</div>
+                    <div class="placeholder-text">${product.name}</div>
+                </div>
+            </div>
             <div class="product-info">
                 <div class="product-name">
                     ${product.name}

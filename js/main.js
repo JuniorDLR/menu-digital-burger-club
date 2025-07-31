@@ -595,26 +595,61 @@ function updateCartTotal() {
 
 // Send order to WhatsApp
 function sendToWhatsApp() {
-    let message = "🍔 *PEDIDO THE BURGER CLUB* 🍔\n\n";
+    const currentDate = new Date().toLocaleDateString('es-ES', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+    });
     
-    cart.forEach(item => {
-        message += `• ${item.name}`;
+    let message = `🍔 *PEDIDO THE BURGER CLUB* 🍔\n`;
+    message += `📅 *Fecha:* ${currentDate}\n`;
+    message += `🌐 *Pedido desde:* Página Web\n\n`;
+    message += `📋 *DETALLES DEL PEDIDO:*\n\n`;
+    
+    cart.forEach((item, index) => {
+        message += `${index + 1}. *${item.name}*\n`;
         if (item.selectedOption) {
-            message += ` (${item.selectedOption})`;
+            message += `   Opción: ${item.selectedOption}\n`;
         }
         if (item.selectedSauces && item.selectedSauces.length > 0) {
-            message += ` - Salsas: ${item.selectedSauces.join(', ')}`;
+            message += `   Salsas: ${item.selectedSauces.join(', ')}\n`;
         }
-        message += ` x${item.quantity} - C$${item.price * item.quantity}\n`;
+        message += `   Cantidad: ${item.quantity} - C$${item.price * item.quantity}\n\n`;
     });
     
     const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-    message += `\n💰 *Total: C$${total}*\n\n`;
-    message += "📍 *Todas las hamburguesas incluyen papas fritas*";
+    message += `💰 *TOTAL A PAGAR: C$${total}*\n\n`;
+    message += `📍 Granada, Nicaragua\n`;
+    message += `📞 8151 2492\n\n`;
+    message += `¡Gracias por tu pedido! 🎉`;
     
-    const whatsappUrl = `https://wa.me/50581512492?text=${encodeURIComponent(message)}`;
-    window.open(whatsappUrl, '_blank');
-    showToast('📱 Pedido enviado a WhatsApp', 'success');
+    try {
+        const encodedMessage = encodeURIComponent(message);
+        const whatsappUrl = `https://wa.me/50581512492?text=${encodedMessage}`;
+        
+        // Verificar si la URL es demasiado larga
+        if (whatsappUrl.length > 2048) {
+            // Si es muy larga, usar un mensaje más corto
+            let shortMessage = `🍔 *PEDIDO THE BURGER CLUB*\n\n`;
+            cart.forEach((item, index) => {
+                shortMessage += `${index + 1}. ${item.name} x${item.quantity} - C$${item.price * item.quantity}\n`;
+            });
+            shortMessage += `\n💰 *TOTAL: C$${total}*\n`;
+            shortMessage += `📍 Granada, Nicaragua`;
+            
+            const shortUrl = `https://wa.me/50581512492?text=${encodeURIComponent(shortMessage)}`;
+            window.open(shortUrl, '_blank');
+        } else {
+            window.open(whatsappUrl, '_blank');
+        }
+        
+        showToast('📱 Pedido enviado a WhatsApp', 'success');
+    } catch (error) {
+        console.error('Error al abrir WhatsApp:', error);
+        showToast('❌ Error al abrir WhatsApp', 'error');
+    }
 }
 
 // Show toast notification
