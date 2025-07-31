@@ -245,11 +245,7 @@ function handleLogout() {
 
 // Update admin info in login screen
 function updateAdminInfo() {
-    if (adminAccount) {
-        document.getElementById('admin-name').textContent = `Bienvenido, ${adminAccount.name}`;
-        document.getElementById('admin-email').textContent = adminAccount.email;
-        document.getElementById('login-email').placeholder = adminAccount.email;
-    }
+    // Función eliminada por seguridad - no mostrar información personal
 }
 
 // Update current user in admin panel
@@ -580,37 +576,15 @@ function updateCategoryStats() {
     });
 }
 
-// Load profile data
+// Load profile data - removed for security
 function loadProfileData() {
-    if (adminAccount) {
-        document.getElementById('profile-name').value = adminAccount.name;
-        document.getElementById('profile-email').value = adminAccount.email;
-        
-        const createdDate = new Date(adminAccount.createdAt).toLocaleDateString('es-ES', {
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric',
-            hour: '2-digit',
-            minute: '2-digit'
-        });
-        document.getElementById('account-created').textContent = createdDate;
-    }
+    // Función eliminada por seguridad - no mostrar información personal
 }
 
-// Handle profile update
+// Handle profile update - removed for security
 function handleProfileUpdate(e) {
     e.preventDefault();
-    
-    const name = document.getElementById('profile-name').value;
-    const email = document.getElementById('profile-email').value;
-    
-    adminAccount.name = name;
-    adminAccount.email = email;
-    
-    localStorage.setItem('burgerclub-admin', JSON.stringify(adminAccount));
-    updateAdminInfo();
-    updateCurrentUser();
-    alert('¡Perfil actualizado exitosamente!');
+    // Función eliminada por seguridad - no mostrar información personal
 }
 
 // Handle password change

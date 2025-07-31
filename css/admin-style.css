@@ -82,34 +82,7 @@ body {
     padding: 2rem;
 }
 
-.admin-info {
-    background: #dbeafe;
-    border: 2px solid #3b82f6;
-    border-radius: 1rem;
-    padding: 1rem;
-    margin-bottom: 2rem;
-}
-
-.admin-details {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-}
-
-.admin-details i {
-    color: #3b82f6;
-    font-size: 1.5rem;
-}
-
-.admin-name {
-    font-weight: bold;
-    color: #1e40af;
-}
-
-.admin-email {
-    font-size: 0.875rem;
-    color: #3b82f6;
-}
+/* Admin info removed for security reasons */
 
 /* Form Styles */
 .form-group {
@@ -641,18 +614,26 @@ input:checked + .slider:before {
 
 .category-progress-header {
     display: flex;
-    justify-content: between;
+    justify-content: space-between;
+    align-items: center;
     margin-bottom: 0.5rem;
+    gap: 1rem;
 }
 
 .category-name {
     font-weight: bold;
     font-size: 1.125rem;
+    color: #111827;
 }
 
 .category-count {
     color: #6b7280;
     font-weight: 600;
+    font-size: 0.875rem;
+    background: #f3f4f6;
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    white-space: nowrap;
 }
 
 .progress-bar {
